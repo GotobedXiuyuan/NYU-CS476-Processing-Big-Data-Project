@@ -3,11 +3,11 @@ import org.apache.spark.sql.functions._
 import org.apache.spark.sql.types.{DoubleType, IntegerType}
 
 // Initialize SparkSession
-val spark = SparkSession.builder().appName("NYPD Arrest Data").getOrCreate()
+val spark = SparkSession.builder().appName("NYPD Arrest Data Profiling").getOrCreate()
 
 import spark.implicits._
 
-val Path = "NYPD_Arrest_Data__Year_to_Date__20240303.csv"
+val Path = "project_cleaned.csv"
 val df = spark.read.option("header", "true").option("inferSchema", "true").csv(Path)
 
 
@@ -15,14 +15,13 @@ val df = spark.read.option("header", "true").option("inferSchema", "true").csv(P
 val dfNumerics = df
   .withColumn("ARREST_KEY", $"ARREST_KEY".cast(DoubleType))
   .withColumn("PD_CD", $"PD_CD".cast(DoubleType))
-  .withColumn("KY_CD", $"KY_CD".cast(DoubleType))
   .withColumn("X_COORD_CD", $"X_COORD_CD".cast(DoubleType))
   .withColumn("Y_COORD_CD", $"Y_COORD_CD".cast(DoubleType))
   .withColumn("Latitude", $"Latitude".cast(DoubleType))
   .withColumn("Longitude", $"Longitude".cast(DoubleType))
 
 // Selecting the numerical columns 
-val numericalCols = Seq("ARREST_KEY", "PD_CD", "KY_CD", "X_COORD_CD", "Y_COORD_CD", "Latitude", "Longitude")
+val numericalCols = Seq("ARREST_KEY", "PD_CD", "X_COORD_CD", "Y_COORD_CD", "Latitude", "Longitude")
 
 // Get the mean median mode std of the numerical value
 numericalCols.foreach { colName =>
@@ -38,16 +37,12 @@ numericalCols.foreach { colName =>
   println(s"Mode: $mode")
   println(s"Standard Deviation: $stdl")
 }
+// Calculate and print the count of unique values for each column
+df.columns.foreach { colName =>
+  val uniqueCount = df.select(colName).distinct().count()
+  println(s"Unique count for $colName: $uniqueCount")
+}
 
 
-val dfWithFormattedText = df.withColumn("Clean_PD_DESC", lower(trim($"PD_DESC")))
-
-val dfFinal = dfWithFormattedText.withColumn("Is_Felony", when($"LAW_CAT_CD" === "F", 1).otherwise(0))
-
-
-
-dfFinal.show()
-
-dfFinal.write.option("header", "true").csv(""/user/xw2147_nyu_edu/NYPD_Arrest_Data_Cleaned.csv")
 
 spark.stop()
