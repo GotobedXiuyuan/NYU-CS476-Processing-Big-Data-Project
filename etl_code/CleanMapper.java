@@ -20,13 +20,20 @@ public class CleanMapper extends Mapper<LongWritable, Text, LongWritable, Text> 
             if (!columns[8].isEmpty() && !columns[1].isEmpty() && !columns[8].isEmpty() && !columns[11].isEmpty() && !columns[12].isEmpty() && !columns[13].isEmpty() 
                 && !columns[5].isEmpty() && !columns[7].isEmpty()) {
                 String cleanedRow = String.join(",",
+                    columns[0],  // ARREST_KEY
                     columns[1],  // ARREST_DATE
+                    columns[2],  // PD_CD
+                    columns[7],  // LAW_CAT_CD
                     columns[8],  // ARREST_BORO
+                    columns[9],  // ARREST_PRECINCT
+                    columns[10], // JURISDICTION_CODE
                     columns[11], // AGE_GROUP
                     columns[12], // PERP_SEX
                     columns[13], // PERP_RACE
-                    columns[5], // OFNS_DESC
-                    columns[7]  // LAW_CAT_CD
+                    columns[14], // X_COORD_CD
+                    columns[15], // Y_COORD_CD
+                    columns[16], // Latitude
+                    columns[17]  // Longitude
                 );
                 
                 // Write the cleaned row to the context, using the original input key
