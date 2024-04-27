@@ -52,7 +52,7 @@ Step by step:
 
 1) Cleaning the Data:
 
-We first remove some missing values and unwanted columns,
+We first remove missing values and unwanted columns,
 the columns we keep are:
 ARREST_DATE,PD_CD,LAW_CAT_CD,ARREST_BORO,ARREST_PRECINCT,JURISDICTION_CODE,AGE_GROUP,PERP_SEX,PERP_RACE,X_COORD_CD,Y_COORD_CD,Latitude,Longitude
 
