@@ -57,49 +57,33 @@ the columns we keep are:
 ARREST_DATE,PD_CD,LAW_CAT_CD,ARREST_BORO,ARREST_PRECINCT,JURISDICTION_CODE,AGE_GROUP,PERP_SEX,PERP_RACE,X_COORD_CD,Y_COORD_CD,Latitude,Longitude
 
 
-To clean the data, navigate to the /etl_code directory then run the command:
+To clean the data, go to etl_code directory then run the command (if the class and jar files are already there):
 
 hadoop jar Clean.jar Clean NYPD_Arrest_Data__Year_to_Date__20240303.csv project_cleaned
 
-If you wish to see the cleaned dataset, you can run the commands:
+To see the cleaned dataset look like, run the line:
+hdfs dfs -cat project_cleaned/part-r-00001
 
-hdfs dfs -get CleanDataset/output 
-cat output/part-r-00000
+However，since the profiling and analytics jobs are done using scala, we need a few lines to transform the mapreduce output to the input for scala, as the mapreduce output does not have any columns names. To do so, run the commands in the screenshots:extra_mapreduce_to_spark1
 
 2) Profiling the Data:
 
-We then can profile our data, checking how many lines remain after the initial cleaning.
+We then can profile our data, checking the statistics of numerical columns and check how many value counts of each column.
 
-To profile the data, navigate to the /profiling_code directory then run the command:
+To profile the data, go to the profiling_code directory then run the command:
 
-hadoop jar countRecs.jar CountRecs /user/<netID>/CleanDataset/output/part-r-00000 /user/<netID>/ProfileDataset/output
+spark-shell --deploy-mode client -i profiling.scala
 
-If you wish to see how many records there are, you can run the commands:
-
-hdfs dfs -get ProfileDataset/output 
-cat output/part-r-00000
+You can see the statistics of numerical columns and how many value counts of each column directly after running the scala
 
 3) Analyzing the Data
 
-After cleaning and profiling, we can now analyze our data. These files analyze our data in two way, tracking how average teacher salaries change and how average board of education member salaries change.
+To do analytics on the cleaned dataset, go to the ana_code directory then run the command:
 
-To analyze the average teacher salary, navigate to the /ana_code directory then run the command:
+spark-shell --deploy-mode client -i analytics.scala
 
-hadoop jar averageTeacherSalary.jar AverageTeacherSalary /user/<netID>/CleanDataset/output/part-r-00000 /user/<netID>/AverageTeacherSalary/output
-
-If you wish to see the average teacher salary throughout the years, you can run the commands:
-
-hdfs dfs -get AverageTeacherSalary/output 
-cat output/part-r-00000
-
-To analyze the average board of education member salary, navigate to the /ana_code directory then run the command:
-
-hadoop jar averageTeacherSalary.jar AverageTeacherSalary /user/<netID>/CleanDataset/output/part-r-00000 /user/<netID>/AverageTeacherSalary/output
-
-If you wish to see the average teacher salary throughout the years, you can run the commands:
-
-hdfs dfs -get AverageTeacherSalary/output 
-cat output/part-r-00000
-
-After completing this step, we have finished our step-by-step guide to analyzing education spending in Montana.
+The analytics jobs do the following 2 analytics:
+1. show the trend of each month's arrest numbers
+2. show the distribution of charge severity across different boroughs 
+After completing this step, we have finished our step-by-step guide
 
