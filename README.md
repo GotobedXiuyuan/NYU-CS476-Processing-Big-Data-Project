@@ -2,7 +2,7 @@
 Directory Descriptions:
 1) /data_ingest:
 
-https://data.cityofnewyork.us/Public-Safety/NYPD-Arrest-Data-Year-to-Date-/uip8-fykc/about_da ta
+https://data.cityofnewyork.us/Public-Safety/NYPD-Arrest-Data-Year-to-Date-/uip8-fykc/about_data
 
 Here are the column names along with their corresponding data types:
 
@@ -26,14 +26,15 @@ Latitude: String
 Longitude: String
 New Georeferenced Column: String
 
+The dataset is zipped to fit in the Github's Maximum file size of 25 MB
 
 2) /etl_code
 
-Directory containing .java, .class, and .jar files used to clean the Employee_Dataset.csv file, (ie Removing unwanted columns).
+Directory containing .java, .class, and .jar files used to clean the NYPD_Arrest_Data__Year_to_Date__20240303.csv using Mapreduce, (Removing unwanted columns and missing values).
 
 3) /profiling_code
 
-Directory containing .java, .class, and .jar files used to basic data profiling (only used the CountRecs MR job which was assigned as a homework assignment)
+Directory containing scala file used to basic data profiling (only used the CountRecs MR job which was assigned as a homework assignment)
 
 4) /ana_code:
 
