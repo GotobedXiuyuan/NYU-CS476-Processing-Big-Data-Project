@@ -1,6 +1,111 @@
 # NYU-CS476-Processing-Big-Data-Project
-	
-  1.  use mapreduce to remove the missing values and keep the columns we want
-  2.  transform the data from mapreduce output to csv file in dataproc
-  3.  use scala code to profile the mapreduce cleaned csv
-  4.  use scala analytics code to analyze the results
+Directory Descriptions:
+1) /data_ingest:
+
+https://data.cityofnewyork.us/Public-Safety/NYPD-Arrest-Data-Year-to-Date-/uip8-fykc/about_da ta
+
+Here are the column names along with their corresponding data types:
+
+ARREST_KEY: String
+ARREST_DATE: String
+PD_CD: String
+PD_DESC: String
+KY_CD: String
+OFNS_DESC: String
+LAW_CODE: String
+LAW_CAT_CD: String
+ARREST_BORO: String
+ARREST_PRECINCT: String
+JURISDICTION_CODE: String
+AGE_GROUP: String
+PERP_SEX: String
+PERP_RACE: String
+X_COORD_CD: String
+Y_COORD_CD: String
+Latitude: String
+Longitude: String
+New Georeferenced Column: String
+
+
+2) /etl_code
+
+Directory containing .java, .class, and .jar files used to clean the Employee_Dataset.csv file, (ie Removing unwanted columns).
+
+3) /profiling_code
+
+Directory containing .java, .class, and .jar files used to basic data profiling (only used the CountRecs MR job which was assigned as a homework assignment)
+
+4) /ana_code:
+
+Directory containing .java, .class, and .jar files related to the analytics of the project (ie. Finding average salaries)
+
+5) /screenshots
+
+Directory containing screenshots of all MR job summaries and outputs. Files are labeled X_Y_ptZ, where X is the MR job associated with the file, Y indicates whether the pictures are job summaries or outputs. Since summaries are long, they are divided into multiple parts and Z indicates which part of the job summary the pictures is associated with.
+
+6) /test_code
+
+Directory with one file, test.java, which was the file used to determine that my original input files contained hidden characters and needed to be removed in the cleaning process.
+
+Step by step:
+
+All .class and .jar files are already built so step by step instructions detail the flow in which we must process the data.
+
+Our goal is to perform some basic analysis on teacher and board of education member salaries in Montana from 2011 to 2021.
+
+
+
+1) Cleaning the Data:
+
+We first must remove unwanted columns, leaving the new schema:
+
+Job title: String
+Salary: Double 
+Year: Int
+
+To clean the data, navigate to the /etl_code directory then run the command:
+
+hadoop jar clean.jar Clean Employee_Dataset.csv /user/<netID>/CleanDataset/output
+
+If you wish to see the cleaned dataset, you can run the commands:
+
+hdfs dfs -get CleanDataset/output 
+cat output/part-r-00000
+
+2) Profiling the Data:
+
+We then can profile our data, checking how many lines remain after the initial cleaning.
+
+To profile the data, navigate to the /profiling_code directory then run the command:
+
+hadoop jar countRecs.jar CountRecs /user/<netID>/CleanDataset/output/part-r-00000 /user/<netID>/ProfileDataset/output
+
+If you wish to see how many records there are, you can run the commands:
+
+hdfs dfs -get ProfileDataset/output 
+cat output/part-r-00000
+
+3) Analyzing the Data
+
+After cleaning and profiling, we can now analyze our data. These files analyze our data in two way, tracking how average teacher salaries change and how average board of education member salaries change.
+
+To analyze the average teacher salary, navigate to the /ana_code directory then run the command:
+
+hadoop jar averageTeacherSalary.jar AverageTeacherSalary /user/<netID>/CleanDataset/output/part-r-00000 /user/<netID>/AverageTeacherSalary/output
+
+If you wish to see the average teacher salary throughout the years, you can run the commands:
+
+hdfs dfs -get AverageTeacherSalary/output 
+cat output/part-r-00000
+
+To analyze the average board of education member salary, navigate to the /ana_code directory then run the command:
+
+hadoop jar averageTeacherSalary.jar AverageTeacherSalary /user/<netID>/CleanDataset/output/part-r-00000 /user/<netID>/AverageTeacherSalary/output
+
+If you wish to see the average teacher salary throughout the years, you can run the commands:
+
+hdfs dfs -get AverageTeacherSalary/output 
+cat output/part-r-00000
+
+After completing this step, we have finished our step-by-step guide to analyzing education spending in Montana.
+
