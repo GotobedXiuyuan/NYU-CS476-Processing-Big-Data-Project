@@ -57,7 +57,7 @@ the columns we keep are:
 ARREST_DATE,PD_CD,LAW_CAT_CD,ARREST_BORO,ARREST_PRECINCT,JURISDICTION_CODE,AGE_GROUP,PERP_SEX,PERP_RACE,X_COORD_CD,Y_COORD_CD,Latitude,Longitude
 
 
-To clean the data, go to etl_code directory then run the command (if the class and jar files are already there):
+To clean the data, go to etl_code directory then run the command (if the java, class and jar files are already there):
 
 hadoop jar Clean.jar Clean NYPD_Arrest_Data__Year_to_Date__20240303.csv project_cleaned
 
