@@ -1,4 +1,4 @@
-# NYU-CS476-Processing-Big-Data-Project
+# Processing-Big-Data-Project
 Directory Descriptions:
 1) /data_ingest:
 
