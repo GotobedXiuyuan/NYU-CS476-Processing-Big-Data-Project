@@ -34,39 +34,32 @@ Directory containing .java, .class, and .jar files used to clean the NYPD_Arrest
 
 3) /profiling_code
 
-Directory containing scala file used to basic data profiling (only used the CountRecs MR job which was assigned as a homework assignment)
+Directory containing scala file used to do data profiling 
 
 4) /ana_code:
 
-Directory containing .java, .class, and .jar files related to the analytics of the project (ie. Finding average salaries)
+Directory containing scala file to do analytics of cleaned dataset
 
 5) /screenshots
 
-Directory containing screenshots of all MR job summaries and outputs. Files are labeled X_Y_ptZ, where X is the MR job associated with the file, Y indicates whether the pictures are job summaries or outputs. Since summaries are long, they are divided into multiple parts and Z indicates which part of the job summary the pictures is associated with.
+Directory containing screenshots of all cleaning(mapreduce), profiling(scala), analytics(scala), including a small step from Mapreduce output to scala input
 
 6) /test_code
 
-Directory with one file, test.java, which was the file used to determine that my original input files contained hidden characters and needed to be removed in the cleaning process.
+Contains some mapreduce code to profile the data, was a previous assignment code
 
 Step by step:
 
-All .class and .jar files are already built so step by step instructions detail the flow in which we must process the data.
-
-Our goal is to perform some basic analysis on teacher and board of education member salaries in Montana from 2011 to 2021.
-
-
-
 1) Cleaning the Data:
 
-We first must remove unwanted columns, leaving the new schema:
+We first must remove some missing values and unwanted columns,
+the columns we keep are:
+ARREST_DATE,PD_CD,LAW_CAT_CD,ARREST_BORO,ARREST_PRECINCT,JURISDICTION_CODE,AGE_GROUP,PERP_SEX,PERP_RACE,X_COORD_CD,Y_COORD_CD,Latitude,Longitude
 
-Job title: String
-Salary: Double 
-Year: Int
 
 To clean the data, navigate to the /etl_code directory then run the command:
 
-hadoop jar clean.jar Clean Employee_Dataset.csv /user/<netID>/CleanDataset/output
+hadoop jar clean.jar Clean NYPD_Arrest_Data__Year_to_Date__20240303.csv 
 
 If you wish to see the cleaned dataset, you can run the commands:
 
