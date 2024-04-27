@@ -59,7 +59,7 @@ ARREST_DATE,PD_CD,LAW_CAT_CD,ARREST_BORO,ARREST_PRECINCT,JURISDICTION_CODE,AGE_G
 
 To clean the data, navigate to the /etl_code directory then run the command:
 
-hadoop jar clean.jar Clean NYPD_Arrest_Data__Year_to_Date__20240303.csv 
+hadoop jar Clean.jar Clean NYPD_Arrest_Data__Year_to_Date__20240303.csv project_cleaned
 
 If you wish to see the cleaned dataset, you can run the commands:
 
